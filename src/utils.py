@@ -1,8 +1,30 @@
 from pprint import pformat
 from functools import reduce
+import os
+import subprocess
 import sys
 
 # ---- System Utils ------------------------------------------------------
+def mkdirp(dir_name):
+    subprocess.run(
+        ["mkdir -p {dir_name}".format(dir_name=dir_name)],
+        shell=True, check=True
+    )
+
+def ln_file(orig, dest):
+    if not os.path.isfile(os.path.join(dest)):
+        subprocess.run(
+            ["ln -s {orig} {dest}".format(orig=orig, dest=dest)],
+            shell=True, check=True
+        )
+
+def cp_file(orig, dest):
+    if not os.path.isfile(os.path.join(dest)):
+        subprocess.run(
+            ["cp {orig} {dest}".format(orig=orig, dest=dest)],
+            shell=True, check=True
+        )
+
 def throw_err(msg):
     '''Throws a general exception without a traceback.'''
     sys.tracebacklimit = 0
