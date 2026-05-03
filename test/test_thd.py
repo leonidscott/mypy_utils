@@ -4,7 +4,6 @@ import pytest
 import sys
 import os
 sys.path.insert(1, os.path.dirname(__file__) + "/../src")
-print(sys.path)
 import utils as mypy
 # -- Local Imports ----
 
