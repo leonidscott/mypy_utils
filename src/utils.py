@@ -1,6 +1,7 @@
 from pprint import pformat
 from functools import reduce
 import os
+from pathlib import Path
 import subprocess
 import sys
 
@@ -24,6 +25,18 @@ def cp_file(orig, dest):
             ["cp {orig} {dest}".format(orig=orig, dest=dest)],
             shell=True, check=True
         )
+
+def touch(filepath: str, cont:str = "", strict:bool = False) -> bool:
+    path = Path(filepath)
+    exists = path.exists()
+    if not exists:
+        print("creating file: ", path)
+        f = open(filepath, "w")
+        f.write(cont+ ("" if cont == "" else "\n"))
+        f.close()
+    if exists and strict:
+        throw_err(f"{filepath} already exists, delete or move to proceed")
+    return exists
 
 def throw_err(msg):
     '''Throws a general exception without a traceback.'''
