@@ -38,6 +38,16 @@ def touch(filepath: str, cont:str = "", strict:bool = False) -> bool:
         throw_err(f"{filepath} already exists, delete or move to proceed")
     return exists
 
+def rm(filepath: str, verbose:bool = False) -> bool:
+    path = Path(filepath)
+
+    if path.exists():
+        if verbose: print("removing file:", path)
+        path.unlink()
+        return True
+
+    return False
+
 def throw_err(msg):
     '''Throws a general exception without a traceback.'''
     sys.tracebacklimit = 0
